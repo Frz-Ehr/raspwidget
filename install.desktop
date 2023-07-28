@@ -1,5 +1,5 @@
 [Desktop Entry]
 Type=Application
 Name=Install Raspwidget
-Exec=sh -c '$HOME/raspwidget/scripts/install.sh'
-Terminal=true
+Exec=x-terminal-emulator -e "sh -c '$HOME/raspwidget/scripts/install.sh; read'"
+Terminal=false
