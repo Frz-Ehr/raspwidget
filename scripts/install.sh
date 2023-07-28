@@ -7,7 +7,7 @@ find $HOME/raspwidget -name "*.sh" -o -name "*.py" -exec chmod +x {} \;
 echo "[Desktop Entry]
 Type=Application
 Name=UpdateRaspwidget
-Exec=sh -c '$HOME/raspwidget/scripts/update.sh'
+Exec=x-terminal-emulator -e '$HOME/raspwidget/scripts/update.sh'
 Icon=$HOME/raspwidget/src/update-icone.png
 Terminal=false" > $HOME/Desktop/UpdateRaspwidget.desktop
 
