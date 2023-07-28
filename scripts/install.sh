@@ -1,7 +1,10 @@
 #!/bin/bash
 
 # Make the scripts executable
-find $HOME/raspwidget -name "*.sh" -o -name "*.py" -exec chmod +x {} \;
+for file in $(find $HOME/raspwidget -name "*.sh" -o -name "*.py")
+do
+    chmod +x $file
+done
 
 # Create the .desktop file
 echo "[Desktop Entry]
