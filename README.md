@@ -1,5 +1,3 @@
 # raspwidget
 
-WAKEUP
-WAKE UP
-lookaround
+openyoureyes
