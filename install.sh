@@ -6,7 +6,19 @@ do
     chmod +x $file
 done
 
-# Create the .desktop file
+# Create the main.desktop file
+echo "[Desktop Entry]
+Type=Application
+Name=Raspwidget
+Exec=python3 $HOME/raspwidget/main.py
+Icon=$HOME/raspwidget/src/main-icone.png
+Terminal=false" > $HOME/Desktop/Raspwidget.desktop
+
+# Make the .desktop file executable
+chmod +x $HOME/Desktop/Raspwidget.desktop
+
+
+# Create the update.desktop file
 echo "[Desktop Entry]
 Type=Application
 Name=UpdateRaspwidget
@@ -16,3 +28,4 @@ Terminal=false" > $HOME/Desktop/UpdateRaspwidget.desktop
 
 # Make the .desktop file executable
 chmod +x $HOME/Desktop/UpdateRaspwidget.desktop
+
