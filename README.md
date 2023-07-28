@@ -1,4 +1,3 @@
 # raspwidget
 
-openyoureyes
-becareful
+think
