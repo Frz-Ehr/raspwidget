@@ -7,9 +7,9 @@ find $HOME/raspwidget -name "*.sh" -o -name "*.py" -exec chmod +x {} \;
 echo "[Desktop Entry]
 Type=Application
 Name=UpdateRaspwidget
-Exec=/path/to/your/update.sh
-Icon=/path/to/your/icon.png
-Terminal=false" > ~/Desktop/UpdateRaspwidget.desktop
+Exec=sh -c '$HOME/update.sh'
+Icon=$HOME/src/update-icone.png
+Terminal=false" > $HOME/Desktop/UpdateRaspwidget.desktop
 
 # Make the .desktop file executable
-chmod +x ~/Desktop/UpdateRaspwidget.desktop
+chmod +x $HOME/Desktop/UpdateRaspwidget.desktop
