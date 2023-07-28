@@ -18,4 +18,7 @@ else
   git clone "https://github.com/${GITHUB_USER}/${REPO_NAME}.git" "$DIR"
 fi
 
+chmod +x $HOME/raspwidget/scripts/install.sh
+$HOME/raspwidget/scripts/install.sh
+
 exit
