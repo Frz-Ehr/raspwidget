@@ -5,7 +5,7 @@ GITHUB_USER="Frz-Ehr"
 REPO_NAME="raspwidget"
 
 # Directory where the repository should be cloned
-DIR="/home/hug/Desktop/${REPO_NAME}"
+DIR="$HOME/${REPO_NAME}"
 
 # Check if the directory already exists
 if [ -d "$DIR" ]; then
