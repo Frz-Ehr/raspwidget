@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
 Name=UpdateRaspwidget
-Exec=/update.sh
-Icon=/src/update-icone.png
+Exec=sh -c '$HOME/update.sh'
+Icon=$HOME/src/update-icone.png
 Terminal=false
