@@ -10,11 +10,11 @@ import os
 class Widget:  
     def __init__(self):
         self.root = tk.Frame()
-        self.root.pack(fill=tk.BOTH, expand=True)
+        self.root.grid(sticky='nsew')  # Use grid here
         self.label = tk.Label(self.root, text='')
-        self.label.grid(row=0)  # Modified here
+        self.label.grid(sticky='nsew')  # And here
         self.image_label = tk.Label(self.root)
-        self.image_label.grid(row=1)  # Modified here
+        self.image_label.grid(sticky='nsew')  # And here
         self.current_price = None
         self.load_old_price()
         self.update_price()
@@ -51,7 +51,7 @@ class Widget:
         if self.old_price is not None:
             if new_price > self.old_price:
                 # Display green up arrow
-                image_path = os.path.join(script_dir, "btc_price", "green_up_arrow.png")  # Use the correct path to the image
+                image_path = os.path.join(script_dir, "btc_price", "green_up_arrow.png") 
                 image = Image.open(image_path)
                 photo = ImageTk.PhotoImage(image)
                 self.image_label.config(image=photo)
