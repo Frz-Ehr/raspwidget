@@ -1,10 +1,9 @@
-#!/usr/bin/env python3
-
 import os
 import sys
 import importlib
 import tkinter as tk
 from tkinter import simpledialog, Toplevel, Listbox
+import json
 
 log_path = os.path.join(os.path.dirname(os.path.realpath(__file__)))  # Adjust this to the path where you want the logs to be saved
 sys.stdout = open(os.path.join(log_path, 'stdout.log'), 'w')
@@ -42,14 +41,12 @@ def choose_widget(frame):
             print("Old widget destroyed")  # Point de contrôle
             new_widget.grid(sticky='nsew')  # Add widget to the grid of the correct frame
             print("New widget packed")  # Point de contrôle
-
+            top.destroy()
+            print("Top destroyed")  # Point de contrôle
             # Save the configuration
             frames_configuration[frame.row][frame.column] = widget_name
             with open("config.json", "w") as f:
                 json.dump(frames_configuration, f)
-
-            top.destroy()
-            print("Top destroyed")  # Point de contrôle
         except Exception as e:
             print(f"Error while loading widget: {str(e)}")
 
@@ -98,5 +95,4 @@ for i in range(2):
             button = tk.Button(frame, text="Choose widget", command=lambda frame=frame: choose_widget(frame))
             button.grid(sticky='nsew')
 
-__all__ = ['choose_widget']
 root.mainloop()
