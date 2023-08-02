@@ -22,9 +22,10 @@ def choose_widget(button):
         w = evt.widget
         index = int(w.curselection()[0])
         widget_name = w.get(index)
-        new_widget = load_widget(widget_name)  # Load the selected widget
-        new_widget.grid(row=button.grid_info()['row'], column=button.grid_info()['column'])  # Add the new widget
+        # Replace the old widget with the new one
+        new_widget = load_widget(widget_name, "Widget").get_tk_object()  # Assume the widget class name is "Widget"
         button.grid_forget()  # Remove the old button
+        new_widget.grid(row=button.grid_info()['row'], column=button.grid_info()['column'])  # Add the new widget
         top.destroy()  # Close the dialog
 
     top = Toplevel(root)
@@ -33,6 +34,10 @@ def choose_widget(button):
     for widget_name in available_widgets:
         listbox.insert(tk.END, widget_name)
     listbox.pack()
+
+    confirm_button = tk.Button(top, text="Valider", command=lambda: on_select(None))
+    confirm_button.pack()
+
 
 root = tk.Tk()
 root.geometry("800x480")  # Adjust this to match your screen's resolution
