@@ -6,6 +6,10 @@ import importlib
 import tkinter as tk
 from tkinter import simpledialog, Toplevel, Listbox
 
+log_path = os.path.join(os.path.dirname(os.path.realpath(__file__)))  # Adjust this to the path where you want the logs to be saved
+sys.stdout = open(os.path.join(log_path, 'stdout.log'), 'w')
+sys.stderr = open(os.path.join(log_path, 'stderr.log'), 'w')
+
 WIDGETS_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'widgets')  # Absolute path
 
 available_widgets = [f[:-3] for f in os.listdir(WIDGETS_DIR) if f.endswith('.py') and f != '__init__.py']
