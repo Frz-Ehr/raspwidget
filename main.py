@@ -5,45 +5,30 @@ import sys
 import importlib
 import tkinter as tk
 from tkinter import simpledialog, Toplevel, Listbox
-import sys
-sys.stdout = open('stdout.log', 'w')
-sys.stderr = open('stderr.log', 'w')
 
-# First, get the absolute path of the widgets directory
 WIDGETS_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'widgets')
 
-# Scan the "widgets" directory for available widgets
 available_widgets = [f[:-3] for f in os.listdir(WIDGETS_DIR) if f.endswith('.py') and f != '__init__.py']
 
 def load_widget(widget_name):
-    try:
-        # First, get the relative path of the widgets directory with respect to the main script's directory
-        relative_widgets_dir = os.path.relpath(WIDGETS_DIR, os.path.dirname(__file__))
+    module = importlib.import_module(f"widgets.{widget_name}")
+    WidgetClass = getattr(module, 'Widget')
+    widget = WidgetClass()
+    return widget
 
-        # Replace all directory separators with dots
-        module_path = relative_widgets_dir.replace(os.sep, '.')
-
-        # Now, you can import the module
-        module = importlib.import_module(f"{module_path}.{widget_name}")
-        WidgetClass = getattr(module, 'Widget')  # Assume the widget class name is "Widget"
-        widget = WidgetClass()
-        return widget
-    except Exception as e:
-        print(f"Error while loading widget {widget_name}: {str(e)}")
-
-def choose_widget(button):
+def choose_widget(frame):
     def on_select(evt):
         w = evt.widget
         index = int(w.curselection()[0])
         widget_name = w.get(index)
-        print(f"Selected widget: {widget_name}")  # Add this line
         try:
-            new_widget = load_widget(widget_name, "Widget").get_tk_object()  # Make sure this is "Widget" and not "WidgetClass"
-            button.grid_forget()  # Remove the old button
-            new_widget.grid(row=button.grid_info()['row'], column=button.grid_info()['column'])  # Add the new widget
-            top.destroy()  # Close the dialog
+            new_widget = load_widget(widget_name).get_tk_object()
+            for widget in frame.winfo_children():
+                widget.destroy()
+            new_widget.pack()
+            top.destroy()
         except Exception as e:
-            print(f"Error while loading widget: {str(e)}")  # Add this line
+            print(f"Error while loading widget: {str(e)}")
 
     top = Toplevel(root)
     listbox = Listbox(top)
@@ -52,23 +37,19 @@ def choose_widget(button):
         listbox.insert(tk.END, widget_name)
     listbox.pack()
 
-
     confirm_button = tk.Button(top, text="Valider", command=lambda: on_select(None))
     confirm_button.pack()
 
-
 root = tk.Tk()
-root.geometry("800x480")  # Adjust this to match your screen's resolution
+root.geometry("800x480")
 
-# Add buttons to layout
-top_left_button = tk.Button(root, text="Choose widget", command=lambda: choose_widget(top_left_button))
-top_right_button = tk.Button(root, text="Choose widget", command=lambda: choose_widget(top_right_button))
-bottom_left_button = tk.Button(root, text="Choose widget", command=lambda: choose_widget(bottom_left_button))
-bottom_right_button = tk.Button(root, text="Choose widget", command=lambda: choose_widget(bottom_right_button))
-
-top_left_button.grid(row=0, column=0)
-top_right_button.grid(row=0, column=1)
-bottom_left_button.grid(row=1, column=0)
-bottom_right_button.grid(row=1, column=1)
+frames = []
+for i in range(2):
+    for j in range(2):
+        frame = tk.Frame(root)
+        frame.grid(row=i, column=j)
+        frames.append(frame)
+        button = tk.Button(frame, text="Choose widget", command=lambda frame=frame: choose_widget(frame))
+        button.pack()
 
 root.mainloop()
