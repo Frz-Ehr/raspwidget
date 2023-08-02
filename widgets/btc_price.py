@@ -6,6 +6,7 @@ from PIL import Image, ImageTk
 import time
 import json
 import os
+from main import choose_widget
 
 class Widget:  
     def __init__(self):
@@ -20,7 +21,7 @@ class Widget:
         self.update_price()
 
         change_widget_button = tk.Button(self.root, text="Change widget", command=self.change_widget)
-        change_widget_button.grid(sticky='nsew')  # Add this line
+        change_widget_button.grid(sticky='nsew')
 
     def change_widget(self):
         choose_widget(self.root)
