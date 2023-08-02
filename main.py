@@ -18,17 +18,19 @@ def load_widget(widget_name):
 
 def choose_widget(frame):
     def on_select(evt):
-        w = evt.widget
-        index = int(w.curselection()[0])
-        widget_name = w.get(index)
-        try:
-            new_widget = load_widget(widget_name).get_tk_object()
-            for widget in frame.winfo_children():
-                widget.destroy()
-            new_widget.pack(fill='both', expand=True)  # Modify here
-            top.destroy()
-        except Exception as e:
-            print(f"Error while loading widget: {str(e)}")
+    w = evt.widget
+    index = int(w.curselection()[0])
+    widget_name = w.get(index)
+    print(f"Widget selected: {widget_name}")  # Add this line
+    try:
+        new_widget = load_widget(widget_name).get_tk_object()
+        for widget in frame.winfo_children():
+            widget.destroy()
+        new_widget.pack()
+        top.destroy()
+    except Exception as e:
+        print(f"Error while loading widget: {str(e)}")
+
 
     top = Toplevel(root)
     listbox = Listbox(top)
