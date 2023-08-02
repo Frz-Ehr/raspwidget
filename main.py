@@ -18,15 +18,17 @@ def load_widget(widget_name):
 
 def choose_widget(button):
     def on_select(evt):
-        # Note here that Tkinter passes an event object to on_select()
         w = evt.widget
         index = int(w.curselection()[0])
         widget_name = w.get(index)
-        # Replace the old widget with the new one
-        new_widget = load_widget(widget_name, "Widget").get_tk_object()  # Assume the widget class name is "Widget"
-        button.grid_forget()  # Remove the old button
-        new_widget.grid(row=button.grid_info()['row'], column=button.grid_info()['column'])  # Add the new widget
-        top.destroy()  # Close the dialog
+        print(f"Selected widget: {widget_name}")  # Add this line
+        try:
+            new_widget = load_widget(widget_name, "Widget").get_tk_object()  # Make sure this is "Widget" and not "WidgetClass"
+            button.grid_forget()  # Remove the old button
+            new_widget.grid(row=button.grid_info()['row'], column=button.grid_info()['column'])  # Add the new widget
+            top.destroy()  # Close the dialog
+        except Exception as e:
+            print(f"Error while loading widget: {str(e)}")  # Add this line
 
     top = Toplevel(root)
     listbox = Listbox(top)
@@ -34,6 +36,7 @@ def choose_widget(button):
     for widget_name in available_widgets:
         listbox.insert(tk.END, widget_name)
     listbox.pack()
+
 
     confirm_button = tk.Button(top, text="Valider", command=lambda: on_select(None))
     confirm_button.pack()
