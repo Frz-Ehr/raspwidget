@@ -8,6 +8,8 @@ from tkinter import simpledialog, Toplevel, Listbox
 
 WIDGETS_DIR = 'widgets'  # Relative path
 
+available_widgets = [f[:-3] for f in os.listdir(WIDGETS_DIR) if f.endswith('.py') and f != '__init__.py']
+
 def load_widget(widget_name):
     module = importlib.import_module(f"{WIDGETS_DIR}.{widget_name}")
     WidgetClass = getattr(module, 'Widget')
