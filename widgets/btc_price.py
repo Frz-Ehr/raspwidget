@@ -51,14 +51,14 @@ class Widget:
         if self.old_price is not None:
             if new_price > self.old_price:
                 # Display green up arrow
-                image_path = os.path.join(script_dir, "btc-price", "green_up_arrow.png")  # Use the correct path to the image
+                image_path = os.path.join(script_dir, "btc_price", "green_up_arrow.png")  # Use the correct path to the image
                 image = Image.open(image_path)
                 photo = ImageTk.PhotoImage(image)
                 self.image_label.config(image=photo)
                 self.image_label.image = photo  # Keep a reference to the image to prevent garbage collection
             elif new_price < self.old_price:
                 # Display red down arrow
-                image_path = os.path.join(script_dir, "btc-price", "red_down_arrow.png")  # Use the correct path to the image
+                image_path = os.path.join(script_dir, "btc_price", "red_down_arrow.png")  # Use the correct path to the image
                 image = Image.open(image_path)
                 photo = ImageTk.PhotoImage(image)
                 self.image_label.config(image=photo)
