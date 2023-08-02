@@ -14,14 +14,13 @@ WIDGETS_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'widgets
 available_widgets = [f[:-3] for f in os.listdir(WIDGETS_DIR) if f.endswith('.py') and f != '__init__.py']
 
 def load_widget(widget_name):
-    try:
-        module = importlib.import_module(f"{WIDGETS_DIR}.{widget_name}")
-        WidgetClass = getattr(module, 'Widget')
-        widget = WidgetClass()
-        print(f"Loaded widget: {widget_name}")  # Add this line for debugging
-    except Exception as e:
-        print(f"Failed to load widget: {widget_name}")  # Add this line for debugging
-        print(f"Error: {str(e)}")  # Add this line for debugging
+    print("Loading widget: " + widget_name)  # Point de contrôle
+    sys.path.insert(0, WIDGETS_DIR)  # Add WIDGETS_DIR to the module search path
+    module = importlib.import_module(f"{widget_name}")  # Remove "widgets." prefix
+    WidgetClass = getattr(module, 'Widget')
+    print("Widget class obtained")  # Point de contrôle
+    widget = WidgetClass()
+    print("Widget instance created")  # Point de contrôle
     return widget
 
 def choose_widget(frame):
@@ -31,13 +30,19 @@ def choose_widget(frame):
         widget_name = w.get(index)
         print(f"Widget selected: {widget_name}")  # Add this line
         try:
+            print("About to load widget")  # Point de contrôle
             new_widget = load_widget(widget_name).get_tk_object()
+            print("Widget loaded successfully")  # Point de contrôle
             for widget in frame.winfo_children():
                 widget.destroy()
+            print("Old widget destroyed")  # Point de contrôle
             new_widget.pack()
+            print("New widget packed")  # Point de contrôle
             top.destroy()
+            print("Top destroyed")  # Point de contrôle
         except Exception as e:
             print(f"Error while loading widget: {str(e)}")
+
     top = Toplevel(root)
     listbox = Listbox(top)
     listbox.bind('<<ListboxSelect>>', on_select)
@@ -47,8 +52,6 @@ def choose_widget(frame):
 
     confirm_button = tk.Button(top, text="Valider", command=lambda: on_select(None))
     confirm_button.pack()
-
-
 
 root = tk.Tk()
 root.geometry("800x480")
