@@ -30,9 +30,10 @@ def choose_widget(frame):
             print("About to load widget")
             new_widget = load_widget(widget_name).get_tk_object()
             print("Widget loaded successfully")
+            print("Frame children before destruction: ", frame.winfo_children())  # Add this line
             for widget in frame.winfo_children():
                 widget.destroy()
-            print("Old widget destroyed")
+            print("Frame children after destruction: ", frame.winfo_children())  # Add this line
             new_widget.pack()
             print("New widget packed")
             top.destroy()
