@@ -1,17 +1,18 @@
+import os
 import sys
 import importlib
 import tkinter as tk
 from tkinter import simpledialog, Toplevel, Listbox
 
-sys.path.append("widgets")  # Add the "widgets" directory to the Python module search path
+# Directory where the widgets are stored
+WIDGETS_DIR = os.path.join(os.path.dirname(__file__), 'widgets')
 
-# A list of available widget names
-# You would replace this with a list of your actual widgets
-available_widgets = ['Widget1', 'Widget2', 'Widget3', 'Widget4']
+# Scan the "widgets" directory for available widgets
+available_widgets = [f[:-3] for f in os.listdir(WIDGETS_DIR) if f.endswith('.py') and f != '__init__.py']
 
-def load_widget(module_name, class_name):
-    module = importlib.import_module(f"widgets.{module_name}")  # Prefix the module name with "widgets."
-    WidgetClass = getattr(module, class_name)
+def load_widget(widget_name):
+    module = importlib.import_module(f"{WIDGETS_DIR}.{widget_name}")  
+    WidgetClass = getattr(module, 'Widget')  # Assume the widget class name is "Widget"
     widget = WidgetClass()
     return widget
 
@@ -21,11 +22,9 @@ def choose_widget(button):
         w = evt.widget
         index = int(w.curselection()[0])
         widget_name = w.get(index)
-        # Replace the old widget with the new one
-        # You would replace "module" with the actual module name for the chosen widget
-        new_widget = load_widget(widget_name, "WidgetClass").get_tk_object()  # Assume the widget class name is "WidgetClass"
-        button.grid_forget()  # Remove the old button
+        new_widget = load_widget(widget_name)  # Load the selected widget
         new_widget.grid(row=button.grid_info()['row'], column=button.grid_info()['column'])  # Add the new widget
+        button.grid_forget()  # Remove the old button
         top.destroy()  # Close the dialog
 
     top = Toplevel(root)
