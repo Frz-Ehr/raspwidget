@@ -6,21 +6,18 @@ import importlib
 import tkinter as tk
 from tkinter import simpledialog, Toplevel, Listbox
 
-sys.stdout = open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'stdout.log'), 'w')
-sys.stderr = open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'stderr.log'), 'w')
-
 WIDGETS_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'widgets')  # Absolute path
 
 available_widgets = [f[:-3] for f in os.listdir(WIDGETS_DIR) if f.endswith('.py') and f != '__init__.py']
 
 def load_widget(widget_name):
-    print("Loading widget: " + widget_name)  # Point de contrôle
+    print("Loading widget: " + widget_name)
     sys.path.insert(0, WIDGETS_DIR)  # Add WIDGETS_DIR to the module search path
-    module = importlib.import_module(f"{widget_name}")  # Remove "widgets." prefix
+    module = importlib.import_module(f"{widget_name}")
     WidgetClass = getattr(module, 'Widget')
-    print("Widget class obtained")  # Point de contrôle
+    print("Widget class obtained")
     widget = WidgetClass()
-    print("Widget instance created")  # Point de contrôle
+    print("Widget instance created")
     return widget
 
 def choose_widget(frame):
@@ -28,18 +25,18 @@ def choose_widget(frame):
         w = evt.widget
         index = int(w.curselection()[0])
         widget_name = w.get(index)
-        print(f"Widget selected: {widget_name}")  # Add this line
+        print(f"Widget selected: {widget_name}")
         try:
-            print("About to load widget")  # Point de contrôle
+            print("About to load widget")
             new_widget = load_widget(widget_name).get_tk_object()
-            print("Widget loaded successfully")  # Point de contrôle
+            print("Widget loaded successfully")
             for widget in frame.winfo_children():
                 widget.destroy()
-            print("Old widget destroyed")  # Point de contrôle
+            print("Old widget destroyed")
             new_widget.pack()
-            print("New widget packed")  # Point de contrôle
+            print("New widget packed")
             top.destroy()
-            print("Top destroyed")  # Point de contrôle
+            print("Top destroyed")
         except Exception as e:
             print(f"Error while loading widget: {str(e)}")
 
@@ -52,6 +49,7 @@ def choose_widget(frame):
 
     confirm_button = tk.Button(top, text="Valider", command=lambda: on_select(None))
     confirm_button.pack()
+
 
 root = tk.Tk()
 root.geometry("800x480")
