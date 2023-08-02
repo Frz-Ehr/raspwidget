@@ -26,8 +26,9 @@ class Widget:
         return response.json()['bitcoin']['usd']
 
     def load_old_price(self):
-        if os.path.exists('old_price.json'):
-            with open('old_price.json', 'r') as f:
+        old_price_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'old_price.json')
+        if os.path.exists(old_price_path):
+            with open(old_price_path, 'r') as f:
                 data = json.load(f)
                 self.old_price = data['price']
                 self.old_price_time = data['time']
@@ -36,7 +37,8 @@ class Widget:
             self.old_price_time = None
 
     def save_old_price(self):
-        with open('old_price.json', 'w') as f:
+        old_price_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'old_price.json')
+        with open(old_price_path, 'w') as f:
             json.dump({'price': self.current_price, 'time': time.time()}, f)
 
     def update_price(self):
