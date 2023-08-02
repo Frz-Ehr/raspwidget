@@ -17,10 +17,21 @@ WIDGETS_DIR = os.path.join(os.path.dirname(__file__), 'widgets')
 available_widgets = [f[:-3] for f in os.listdir(WIDGETS_DIR) if f.endswith('.py') and f != '__init__.py']
 
 def load_widget(widget_name):
-    module = importlib.import_module(f"{WIDGETS_DIR}.{widget_name}")  
-    WidgetClass = getattr(module, 'Widget')  # Assume the widget class name is "Widget"
-    widget = WidgetClass()
-    return widget
+    try:
+        # First, get the relative path of the widgets directory with respect to the main script's directory
+        relative_widgets_dir = os.path.relpath(WIDGETS_DIR, os.path.dirname(__file__))
+
+        # Replace all directory separators with dots
+        module_path = relative_widgets_dir.replace(os.sep, '.')
+
+        # Now, you can import the module
+        module = importlib.import_module(f"{module_path}.{widget_name}")
+
+        WidgetClass = getattr(module, 'Widget')  # Assume the widget class name is "Widget"
+        widget = WidgetClass()
+        return widget
+    except Exception as e:
+        print(f"Error while loading widget {widget_name}: {str(e)}")
 
 def choose_widget(button):
     def on_select(evt):
