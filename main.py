@@ -8,7 +8,7 @@ from tkinter import simpledialog, Toplevel, Listbox
 
 WIDGETS_DIR = 'widgets'  # Relative path
 
-available_widgets = [f[:-3] for f in os.listdir(WIDGETS_DIR) if f.endswith('.py') and f != '__init__.py']
+#available_widgets = [f[:-3] for f in os.listdir(WIDGETS_DIR) if f.endswith('.py') and f != '__init__.py']
 
 def load_widget(widget_name):
     sys.path.insert(0, WIDGETS_DIR)  # Add WIDGETS_DIR to the module search path
