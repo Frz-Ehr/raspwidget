@@ -6,12 +6,10 @@ import importlib
 import tkinter as tk
 from tkinter import simpledialog, Toplevel, Listbox
 
-WIDGETS_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'widgets')
-
-available_widgets = [f[:-3] for f in os.listdir(WIDGETS_DIR) if f.endswith('.py') and f != '__init__.py']
+WIDGETS_DIR = 'widgets'  # Relative path
 
 def load_widget(widget_name):
-    module = importlib.import_module(f"widgets.{widget_name}")
+    module = importlib.import_module(f"{WIDGETS_DIR}.{widget_name}")
     WidgetClass = getattr(module, 'Widget')
     widget = WidgetClass()
     return widget
