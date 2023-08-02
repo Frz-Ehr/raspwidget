@@ -42,6 +42,12 @@ def choose_widget(frame):
             print("Old widget destroyed")  # Point de contrôle
             new_widget.grid(sticky='nsew')  # Add widget to the grid of the correct frame
             print("New widget packed")  # Point de contrôle
+
+            # Save the configuration
+            frames_configuration[frame.row][frame.column] = widget_name
+            with open("config.json", "w") as f:
+                json.dump(frames_configuration, f)
+
             top.destroy()
             print("Top destroyed")  # Point de contrôle
         except Exception as e:
@@ -56,7 +62,6 @@ def choose_widget(frame):
 
     confirm_button = tk.Button(top, text="Valider", command=lambda: on_select(None))
     confirm_button.pack()
-
 
 root = tk.Tk()
 root.geometry("800x480")
@@ -93,4 +98,5 @@ for i in range(2):
             button = tk.Button(frame, text="Choose widget", command=lambda frame=frame: choose_widget(frame))
             button.grid(sticky='nsew')
 
+__all__ = ['choose_widget']
 root.mainloop()
