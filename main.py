@@ -6,8 +6,8 @@ import importlib
 import tkinter as tk
 from tkinter import simpledialog, Toplevel, Listbox
 
-sys.stdout = open('/raspwidget/stdout.log', 'w')
-sys.stderr = open('/raspwidget/stderr.log', 'w')
+sys.stdout = open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'stdout.log'), 'w')
+sys.stderr = open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'stderr.log'), 'w')
 
 WIDGETS_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'widgets')  # Absolute path
 
