@@ -25,28 +25,29 @@ def load_widget(widget_name):
 
 def choose_widget(frame):
     def on_select(evt):
+        # same as before
         if evt is not None:
             w = evt.widget
             index = int(w.curselection()[0])
             widget_name = w.get(index)
         else:
             widget_name = listbox.get(listbox.curselection())
-        print(f"Widget selected: {widget_name}")  # Add this line
+        print(f"Widget selected: {widget_name}")
         try:
-            print("About to load widget")  # Point de contrôle
+            print("About to load widget")
             new_widget = load_widget(widget_name).get_tk_object()
-            print("Widget loaded successfully")  # Point de contrôle
+            print("Widget loaded successfully")
             for widget in frame.winfo_children():
                 widget.destroy()
-            print("Old widget destroyed")  # Point de contrôle
+            print("Old widget destroyed")
             new_widget.grid(sticky='nsew')  # Add widget to the grid of the correct frame
-            print("New widget packed")  # Point de contrôle
-            top.destroy()
-            print("Top destroyed")  # Point de contrôle
+            print("New widget packed")
             # Save the configuration
             frames_configuration[frame.row][frame.column] = widget_name
             with open("config.json", "w") as f:
                 json.dump(frames_configuration, f)
+            top.destroy()
+            print("Top destroyed")
         except Exception as e:
             print(f"Error while loading widget: {str(e)}")
 
