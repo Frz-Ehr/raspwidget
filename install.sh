@@ -19,7 +19,7 @@ Terminal=false" > $HOME/Desktop/Raspwidget.desktop
 
 # Make the .desktop file executable
 chmod +x $HOME/Desktop/Raspwidget.desktop
-
+chmod +x $HOME/raspwidget/main.py
 
 # Create the update.desktop file
 echo "[Desktop Entry]
