@@ -4,6 +4,10 @@ import importlib
 import tkinter as tk
 from tkinter import simpledialog, Toplevel, Listbox
 
+import sys
+sys.stdout = open('stdout.log', 'w')
+sys.stderr = open('stderr.log', 'w')
+
 # Directory where the widgets are stored
 WIDGETS_DIR = os.path.join(os.path.dirname(__file__), 'widgets')
 
