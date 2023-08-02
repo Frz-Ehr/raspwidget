@@ -6,6 +6,9 @@ import importlib
 import tkinter as tk
 from tkinter import simpledialog, Toplevel, Listbox
 
+sys.stdout = open('/raspwidget/stdout.log', 'w')
+sys.stderr = open('/raspwidget/stderr.log', 'w')
+
 WIDGETS_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'widgets')
 
 available_widgets = [f[:-3] for f in os.listdir(WIDGETS_DIR) if f.endswith('.py') and f != '__init__.py']
@@ -25,6 +28,7 @@ def choose_widget(frame):
             new_widget = load_widget(widget_name).get_tk_object()
             for widget in frame.winfo_children():
                 widget.destroy()
+            new_widget.config(width=frame.winfo_width(), height=frame.winfo_height())
             new_widget.pack()
             top.destroy()
         except Exception as e:
