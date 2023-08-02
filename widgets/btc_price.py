@@ -10,11 +10,11 @@ import os
 class Widget:  
     def __init__(self):
         self.root = tk.Frame()
-        self.root.grid(sticky='nsew')
+        self.root.pack(fill=tk.BOTH, expand=True)
         self.label = tk.Label(self.root, text='')
-        self.label.pack()
+        self.label.grid(row=0)  # Modified here
         self.image_label = tk.Label(self.root)
-        self.image_label.pack()
+        self.image_label.grid(row=1)  # Modified here
         self.current_price = None
         self.load_old_price()
         self.update_price()
