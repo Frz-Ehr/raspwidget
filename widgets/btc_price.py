@@ -19,6 +19,12 @@ class Widget:
         self.load_old_price()
         self.update_price()
 
+        change_widget_button = tk.Button(self.root, text="Change widget", command=self.change_widget)
+        change_widget_button.grid(sticky='nsew')  # Add this line
+
+    def change_widget(self):
+        choose_widget(self.root)
+    
     def get_tk_object(self):
         return self.root
 
