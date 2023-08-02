@@ -5,7 +5,7 @@ import time
 import json
 import os
 
-class BTCWidget:
+class Widget:  # Change the class name to "Widget"
     def __init__(self):
         self.root = tk.Frame()
         self.label = tk.Label(self.root, text='')
