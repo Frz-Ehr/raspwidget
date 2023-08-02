@@ -16,7 +16,7 @@ available_widgets = [f[:-3] for f in os.listdir(WIDGETS_DIR) if f.endswith('.py'
 def load_widget(widget_name):
     print("Loading widget: " + widget_name)  # Point de contrôle
     sys.path.insert(0, WIDGETS_DIR)  # Add WIDGETS_DIR to the module search path
-    module = importlib.import_module(f"{widget_name}")  # Remove "widgets." prefix
+    module = importlib.import_module(f"{widget_name}.{widget_name}")  # Remove "widgets." prefix
     WidgetClass = getattr(module, 'Widget')
     print("Widget class obtained")  # Point de contrôle
     widget = WidgetClass()
