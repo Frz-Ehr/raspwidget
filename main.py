@@ -11,28 +11,30 @@ WIDGETS_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'widgets
 available_widgets = [f[:-3] for f in os.listdir(WIDGETS_DIR) if f.endswith('.py') and f != '__init__.py']
 
 def load_widget(widget_name):
-    print(f"Loading widget: {widget_name}")  # Add this line
-    sys.path.insert(0, WIDGETS_DIR)  # Add WIDGETS_DIR to the module search path
-    module = importlib.import_module(f"{widget_name}")  # Remove "widgets." prefix
-    WidgetClass = getattr(module, 'Widget')
-    widget = WidgetClass()
+    try:
+        module = importlib.import_module(f"{WIDGETS_DIR}.{widget_name}")
+        WidgetClass = getattr(module, 'Widget')
+        widget = WidgetClass()
+        print(f"Loaded widget: {widget_name}")  # Add this line for debugging
+    except Exception as e:
+        print(f"Failed to load widget: {widget_name}")  # Add this line for debugging
+        print(f"Error: {str(e)}")  # Add this line for debugging
     return widget
 
-def on_select(evt):
-    w = evt.widget
-    index = int(w.curselection()[0])
-    widget_name = w.get(index)
-    print(f"Widget selected: {widget_name}")  # Add this line
-    try:
-        new_widget = load_widget(widget_name).get_tk_object()
-        print("Widget loaded successfully")  # Add this line
-        for widget in frame.winfo_children():
-            widget.destroy()
-        new_widget.pack()
-        top.destroy()
-    except Exception as e:
-        print(f"Error while loading widget: {str(e)}")
-
+def choose_widget(frame):
+    def on_select(evt):
+        w = evt.widget
+        index = int(w.curselection()[0])
+        widget_name = w.get(index)
+        print(f"Widget selected: {widget_name}")  # Add this line
+        try:
+            new_widget = load_widget(widget_name).get_tk_object()
+            for widget in frame.winfo_children():
+                widget.destroy()
+            new_widget.pack()
+            top.destroy()
+        except Exception as e:
+            print(f"Error while loading widget: {str(e)}")
     top = Toplevel(root)
     listbox = Listbox(top)
     listbox.bind('<<ListboxSelect>>', on_select)
@@ -42,6 +44,7 @@ def on_select(evt):
 
     confirm_button = tk.Button(top, text="Valider", command=lambda: on_select(None))
     confirm_button.pack()
+
 
 
 root = tk.Tk()
