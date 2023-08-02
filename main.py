@@ -75,6 +75,6 @@ for i in range(2):
         frame.grid(row=i, column=j, sticky='nsew')  # Modify here
         frames.append(frame)
         button = tk.Button(frame, text="Choose widget", command=lambda frame=frame: choose_widget(frame))
-        button.pack(fill='both', expand=True)  # Modify here
+        button.grid(sticky='nsew')  # Modify here
 
 root.mainloop()
