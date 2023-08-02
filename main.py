@@ -40,7 +40,7 @@ def choose_widget(frame):
             for widget in frame.winfo_children():
                 widget.destroy()
             print("Old widget destroyed")  # Point de contrôle
-            new_widget.pack()
+            new_widget.grid(sticky='nsew')
             print("New widget packed")  # Point de contrôle
             top.destroy()
             print("Top destroyed")  # Point de contrôle
