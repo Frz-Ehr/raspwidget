@@ -6,6 +6,9 @@ do
     chmod +x $file
 done
 
+# Install ImageTk
+sudo apt-get install python3-pil.imagetk
+
 # Create the main.desktop file
 echo "[Desktop Entry]
 Type=Application
