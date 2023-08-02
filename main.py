@@ -27,7 +27,6 @@ def choose_widget(frame):
             new_widget = load_widget(widget_name).get_tk_object()
             for widget in frame.winfo_children():
                 widget.destroy()
-            new_widget.config(width=frame.winfo_width(), height=frame.winfo_height())
             new_widget.pack()
             top.destroy()
         except Exception as e:
