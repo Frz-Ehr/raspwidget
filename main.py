@@ -40,13 +40,12 @@ def choose_widget(frame):
             for widget in frame.winfo_children():
                 widget.destroy()
             print("Old widget destroyed")  # Point de contrôle
-            new_widget.grid(sticky='nsew')
+            new_widget.grid(sticky='nsew')  # Add widget to the grid of the correct frame
             print("New widget packed")  # Point de contrôle
             top.destroy()
             print("Top destroyed")  # Point de contrôle
         except Exception as e:
             print(f"Error while loading widget: {str(e)}")
-
 
     top = Toplevel(root)
     listbox = Listbox(top)
