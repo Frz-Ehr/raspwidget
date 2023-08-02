@@ -5,13 +5,12 @@ import sys
 import importlib
 import tkinter as tk
 from tkinter import simpledialog, Toplevel, Listbox
-
 import sys
 sys.stdout = open('stdout.log', 'w')
 sys.stderr = open('stderr.log', 'w')
 
-# Directory where the widgets are stored
-WIDGETS_DIR = os.path.join(os.path.dirname(__file__), 'widgets')
+# First, get the absolute path of the widgets directory
+WIDGETS_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'widgets')
 
 # Scan the "widgets" directory for available widgets
 available_widgets = [f[:-3] for f in os.listdir(WIDGETS_DIR) if f.endswith('.py') and f != '__init__.py']
@@ -26,7 +25,6 @@ def load_widget(widget_name):
 
         # Now, you can import the module
         module = importlib.import_module(f"{module_path}.{widget_name}")
-
         WidgetClass = getattr(module, 'Widget')  # Assume the widget class name is "Widget"
         widget = WidgetClass()
         return widget
