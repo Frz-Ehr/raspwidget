@@ -11,7 +11,8 @@ WIDGETS_DIR = 'widgets'  # Relative path
 available_widgets = [f[:-3] for f in os.listdir(WIDGETS_DIR) if f.endswith('.py') and f != '__init__.py']
 
 def load_widget(widget_name):
-    module = importlib.import_module(f"widgets.{widget_name}")  # Change this line
+    sys.path.insert(0, WIDGETS_DIR)  # Add WIDGETS_DIR to the module search path
+    module = importlib.import_module(f"{widget_name}")  # Remove "widgets." prefix
     WidgetClass = getattr(module, 'Widget')
     widget = WidgetClass()
     return widget
