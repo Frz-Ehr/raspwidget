@@ -10,7 +10,7 @@ import os
 class Widget:  
     def __init__(self):
         self.root = tk.Frame()
-        self.root.pack(fill=tk.BOTH, expand=True)
+        self.root.grid(sticky='nsew')
         self.label = tk.Label(self.root, text='')
         self.label.pack()
         self.image_label = tk.Label(self.root)
