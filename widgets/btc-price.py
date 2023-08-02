@@ -20,11 +20,8 @@ class Widget:  # Change the class name to "Widget"
         return self.root
 
     def get_btc_price(self):
-        response1 = requests.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')
-        response2 = requests.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?id=1')
-        price1 = response1.json()['bitcoin']['usd']
-        price2 = response2.json()['data']['1']['quote']['USD']['price']
-        return (price1 + price2) / 2
+        response = requests.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')
+        return response.json()['bitcoin']['usd']
 
     def load_old_price(self):
         if os.path.exists('old_price.json'):
