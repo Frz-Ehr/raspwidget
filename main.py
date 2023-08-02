@@ -61,6 +61,13 @@ def choose_widget(frame):
 root = tk.Tk()
 root.geometry("800x480")
 
+# Load the configuration
+try:
+    with open("config.json", "r") as f:
+        frames_configuration = json.load(f)
+except FileNotFoundError:
+    frames_configuration = [[None, None], [None, None]]
+
 # Configure the grid
 root.rowconfigure(0, weight=1)
 root.rowconfigure(1, weight=1)
@@ -71,9 +78,19 @@ frames = []
 for i in range(2):
     for j in range(2):
         frame = tk.Frame(root)
-        frame.grid(row=i, column=j, sticky='nsew')  # Modify here
+        frame.grid(row=i, column=j, sticky='nsew')
+        frame.row = i
+        frame.column = j
         frames.append(frame)
-        button = tk.Button(frame, text="Choose widget", command=lambda frame=frame: choose_widget(frame))
-        button.grid(sticky='nsew')  # Modify here
+
+        widget_name = frames_configuration[i][j]
+        if widget_name is not None:
+            # Load the widget
+            widget = load_widget(widget_name).get_tk_object()
+            widget.grid(sticky='nsew')
+        else:
+            # Create the button
+            button = tk.Button(frame, text="Choose widget", command=lambda frame=frame: choose_widget(frame))
+            button.grid(sticky='nsew')
 
 root.mainloop()
