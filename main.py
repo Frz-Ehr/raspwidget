@@ -13,13 +13,13 @@ WIDGETS_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'widgets
 
 available_widgets = [f[:-3] for f in os.listdir(WIDGETS_DIR) if f.endswith('.py') and f != '__init__.py']
 
-def load_widget(widget_name):
+def load_widget(widget_name, frame):
     print("Loading widget: " + widget_name)
     sys.path.insert(0, WIDGETS_DIR)  # Add WIDGETS_DIR to the module search path
     module = importlib.import_module(f"{widget_name}")
     WidgetClass = getattr(module, 'Widget')
     print("Widget class obtained")
-    widget = WidgetClass()
+    widget = WidgetClass(frame)
     print("Widget instance created")
     return widget
 
@@ -35,11 +35,10 @@ def choose_widget(frame):
         print(f"Widget selected: {widget_name}")
         try:
             print("About to load widget")
-            new_widget = load_widget(widget_name).get_tk_object()
-            print("Widget loaded successfully")
             for widget in frame.winfo_children():
                 widget.destroy()
-            print("Old widget destroyed")
+            new_widget = load_widget(widget_name, frame).get_tk_object()
+            print("Widget loaded successfully")
             new_widget.grid(sticky='nsew')  # Add widget to the grid of the correct frame
             print("New widget packed")
             # Save the configuration
