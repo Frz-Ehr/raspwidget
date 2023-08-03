@@ -34,7 +34,7 @@ root.columnconfigure(1, weight=1)
 # Upper left frame
 frame1 = tk.Frame(root)
 frame1.grid(row=0, column=0, sticky='nsew')
-btc_widget = load_widget('btc_price').get_tk_object()
+btc_widget = load_widget('btc_price', frame1).get_tk_object()
 btc_widget.grid(sticky='nsew')
 
 # Upper right frame
