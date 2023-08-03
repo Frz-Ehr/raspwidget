@@ -9,13 +9,12 @@ import os
 from main import choose_widget
 
 class Widget:  
-    def __init__(self):
-        self.root = tk.Frame()
-        self.root.grid(sticky='nsew')  # Use grid here
+    def __init__(self, frame):
+        self.root = frame
         self.label = tk.Label(self.root, text='')
-        self.label.grid(sticky='nsew')  # And here
+        self.label.grid(sticky='nsew')
         self.image_label = tk.Label(self.root)
-        self.image_label.grid(sticky='nsew')  # And here
+        self.image_label.grid(sticky='nsew')
         self.current_price = None
         self.load_old_price()
         self.update_price()
