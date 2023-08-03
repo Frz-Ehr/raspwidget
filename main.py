@@ -2,6 +2,10 @@ import os
 import sys
 import importlib
 import tkinter as tk
+from tkinter import ttk
+from ttkthemes import ThemedTk
+
+root = ThemedTk(theme="equilux") 
 
 log_path = os.path.join(os.path.dirname(os.path.realpath(__file__)))  # Adjust this to the path where you want the logs to be saved
 sys.stdout = open(os.path.join(log_path, 'stdout.log'), 'w')
