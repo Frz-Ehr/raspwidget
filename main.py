@@ -23,7 +23,6 @@ def load_widget(widget_name):
     print("Widget instance created")
     return widget
 
-root = tk.Tk()
 root.geometry("800x480")
 
 # Configure the grid
