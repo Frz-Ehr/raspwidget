@@ -46,9 +46,9 @@ class Widget:
         with open(old_price_path, 'w') as f:
             json.dump({'price': self.current_price, 'time': time.time()}, f)
 
-    def update_price(self):
+     def update_price(self):
         new_price = self.get_btc_price()
-        self.label.config(text=f'Bitcoin Price: ${new_price}')
+        self.label.config(text=f'Bitcoin Price: ${new_price}', justify='center')  # Center align the text
 
         script_dir = os.path.dirname(os.path.realpath(__file__))  # Get the directory containing this script
 
