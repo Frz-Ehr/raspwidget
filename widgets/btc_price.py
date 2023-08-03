@@ -8,13 +8,17 @@ import json
 import os
 
 class Widget:  
-    def __init__(self, frame):
-        self.root = tk.Frame(frame)
-        self.root.grid(sticky='nsew')  # Use grid here
-        self.label = tk.Label(self.root, text='')
-        self.label.grid(sticky='nsew')  # And here
+    def __init__(self):
+        self.root = tk.Frame()
+        self.root.grid(sticky='nsew') 
+
+        # Use a larger font size and bold weight for the label text
+        self.label = tk.Label(self.root, text='', font=("Helvetica", 16, "bold"))
+        self.label.grid(sticky='nsew') 
+
         self.image_label = tk.Label(self.root)
-        self.image_label.grid(sticky='nsew')  # And here
+        self.image_label.grid(sticky='nsew')  
+
         self.current_price = None
         self.load_old_price()
         self.update_price()
