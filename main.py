@@ -13,13 +13,13 @@ sys.stderr = open(os.path.join(log_path, 'stderr.log'), 'w')
 
 WIDGETS_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'widgets')  # Absolute path
 
-def load_widget(widget_name):
+def load_widget(widget_name, parent):
     print("Loading widget: " + widget_name)
     sys.path.insert(0, WIDGETS_DIR)  # Add WIDGETS_DIR to the module search path
     module = importlib.import_module(f"{widget_name}")
     WidgetClass = getattr(module, 'Widget')
     print("Widget class obtained")
-    widget = WidgetClass()  # Remove 'frame' argument
+    widget = WidgetClass(parent)  # Pass 'parent' argument
     print("Widget instance created")
     return widget
 
