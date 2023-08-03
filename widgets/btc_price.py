@@ -8,8 +8,8 @@ import json
 import os
 
 class Widget:  
-    def __init__(self):
-        self.root = tk.Frame()
+    def __init__(self, parent):
+        self.root = tk.Frame(parent)
         self.root.grid(sticky='nsew') 
 
         # Use a larger font size and bold weight for the label text
