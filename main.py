@@ -2,16 +2,12 @@ import os
 import sys
 import importlib
 import tkinter as tk
-from tkinter import simpledialog, Toplevel, Listbox
-import json
 
 log_path = os.path.join(os.path.dirname(os.path.realpath(__file__)))  # Adjust this to the path where you want the logs to be saved
 sys.stdout = open(os.path.join(log_path, 'stdout.log'), 'w')
 sys.stderr = open(os.path.join(log_path, 'stderr.log'), 'w')
 
 WIDGETS_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'widgets')  # Absolute path
-
-available_widgets = [f[:-3] for f in os.listdir(WIDGETS_DIR) if f.endswith('.py') and f != '__init__.py']
 
 def load_widget(widget_name, frame):
     print("Loading widget: " + widget_name)
@@ -23,52 +19,8 @@ def load_widget(widget_name, frame):
     print("Widget instance created")
     return widget
 
-def choose_widget(frame):
-    def on_select(evt):
-        # same as before
-        if evt is not None:
-            w = evt.widget
-            index = int(w.curselection()[0])
-            widget_name = w.get(index)
-        else:
-            widget_name = listbox.get(listbox.curselection())
-        print(f"Widget selected: {widget_name}")
-        try:
-            print("About to load widget")
-            for widget in frame.winfo_children():
-                widget.destroy()
-            new_widget = load_widget(widget_name, frame).get_tk_object()
-            print("Widget loaded successfully")
-            new_widget.grid(sticky='nsew')  # Add widget to the grid of the correct frame
-            print("New widget packed")
-            # Save the configuration
-            frames_configuration[frame.row][frame.column] = widget_name
-            with open("config.json", "w") as f:
-                json.dump(frames_configuration, f)
-            top.destroy()
-            print("Top destroyed")
-        except Exception as e:
-            print(f"Error while loading widget: {str(e)}")
-
-    top = Toplevel(root)
-    listbox = Listbox(top)
-    listbox.bind('<<ListboxSelect>>', on_select)
-    for widget_name in available_widgets:
-        listbox.insert(tk.END, widget_name)
-    listbox.pack()
-
-    confirm_button = tk.Button(top, text="Valider", command=lambda: on_select(None))
-    confirm_button.pack()
-
 root = tk.Tk()
 root.geometry("800x480")
-
-# Load the configuration
-try:
-    with open("config.json", "r") as f:
-        frames_configuration = json.load(f)
-except FileNotFoundError:
-    frames_configuration = [[None, None], [None, None]]
 
 # Configure the grid
 root.rowconfigure(0, weight=1)
@@ -76,23 +28,25 @@ root.rowconfigure(1, weight=1)
 root.columnconfigure(0, weight=1)
 root.columnconfigure(1, weight=1)
 
-frames = []
-for i in range(2):
-    for j in range(2):
-        frame = tk.Frame(root)
-        frame.grid(row=i, column=j, sticky='nsew')
-        frame.row = i
-        frame.column = j
-        frames.append(frame)
+# Upper left frame
+frame1 = tk.Frame(root)
+frame1.grid(row=0, column=0, sticky='nsew')
+btc_widget = load_widget('btc_price', frame1).get_tk_object()
+btc_widget.grid(sticky='nsew')
 
-        widget_name = frames_configuration[i][j]
-        if widget_name is not None:
-            # Load the widget
-            widget = load_widget(widget_name).get_tk_object()
-            widget.grid(sticky='nsew')
-        else:
-            # Create the button
-            button = tk.Button(frame, text="Choose widget", command=lambda frame=frame: choose_widget(frame))
-            button.grid(sticky='nsew')
+# Upper right frame
+frame2 = tk.Frame(root)
+frame2.grid(row=0, column=1, sticky='nsew')
+tk.Label(frame2, text="Widget 2").grid(sticky='nsew')
+
+# Lower left frame
+frame3 = tk.Frame(root)
+frame3.grid(row=1, column=0, sticky='nsew')
+tk.Label(frame3, text="Widget 3").grid(sticky='nsew')
+
+# Lower right frame
+frame4 = tk.Frame(root)
+frame4.grid(row=1, column=1, sticky='nsew')
+tk.Label(frame4, text="Widget 4").grid(sticky='nsew')
 
 root.mainloop()
