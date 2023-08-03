@@ -6,25 +6,19 @@ from PIL import Image, ImageTk
 import time
 import json
 import os
-from main import choose_widget
 
 class Widget:  
     def __init__(self, frame):
-        self.root = frame
+        self.root = tk.Frame(frame)
+        self.root.grid(sticky='nsew')  # Use grid here
         self.label = tk.Label(self.root, text='')
-        self.label.grid(sticky='nsew')
+        self.label.grid(sticky='nsew')  # And here
         self.image_label = tk.Label(self.root)
-        self.image_label.grid(sticky='nsew')
+        self.image_label.grid(sticky='nsew')  # And here
         self.current_price = None
         self.load_old_price()
         self.update_price()
 
-        change_widget_button = tk.Button(self.root, text="Change widget", command=self.change_widget)
-        change_widget_button.grid(sticky='nsew')
-
-    def change_widget(self):
-        choose_widget(self.root)
-    
     def get_tk_object(self):
         return self.root
 
